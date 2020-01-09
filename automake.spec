@@ -3,7 +3,7 @@
 Summary:    A GNU tool for automatically creating Makefiles
 Name:       automake
 Version:    %{api_version}.4
-Release:    2%{?dist}
+Release:    3%{?dist}
 
 # docs ~> GFDL, sources ~> GPLv2+, mkinstalldirs ~> PD and install-sh ~> MIT
 License:    GPLv2+ and GFDL and Public Domain and MIT
@@ -109,6 +109,9 @@ fi
 %{_mandir}/man1/*
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 1.13.4-3
+- Mass rebuild 2013-12-27
+
 * Tue Nov 05 2013 Pavel Raiskup <praiskup@redhat.com> - 1.13.4-2
 - don't BR g77 in arm and RHEL build roots (#1023781)
 
