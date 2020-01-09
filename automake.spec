@@ -8,11 +8,12 @@
 Summary:    A GNU tool for automatically creating Makefiles
 Name:       automake
 Version:    %{api_version}.1
-Release:    1.2%{?dist}
+Release:    4%{?dist}
 License:    GPLv2+ and GFDL
 Group:      Development/Tools
 Source:     http://ftp.gnu.org/gnu/automake/automake-%{version}.tar.bz2
 Patch0:     automake-1.11.1-novala.patch
+Patch1:     automake-1.11.1-CVE-2012-3386.patch
 URL:        http://sources.redhat.com/automake
 Requires:   autoconf >= 2.62
 Buildrequires:  autoconf >= 2.62
@@ -23,7 +24,7 @@ Buildroot:  %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 # for better tests coverage:
 BuildRequires: libtool gettext-devel flex bison texinfo-tex texlive-dvips
-BuildRequires: gcc-java java-devel-openjdk gcc-gfortran /usr/bin/g77
+BuildRequires: gcc-java gcc-gfortran /usr/bin/g77
 BuildRequires: dejagnu expect emacs imake python-docutils
 
 %description
@@ -38,6 +39,8 @@ GNU's Autoconf package.
 %prep
 %setup -q -n automake-%{version}
 %patch0 -p1
+# fix for CVE-2012-3386 (#848469)
+%patch1 -p1
 
 %build
 ./configure --prefix=%{_prefix} --mandir=%{_mandir} --infodir=%{_infodir} \
@@ -82,6 +85,13 @@ fi
 %dir %{_datadir}/aclocal
 
 %changelog
+* Tue Dec 18 2012 Pavel Raiskup <praiskup@redhat.com> - 1.11.1-4
+- remove BR dependency on java-devel-openjdk
+
+* Tue Dec 18 2012 Pavel Raiskup <praiskup@redhat.com> - 1.11.1-3
+- fix for CVE-2012-3386 -- 'make distcheck' was making the directory distdir
+  world-readable (#848469)
+
 * Wed Jun 23 2010 Karsten Hopp <karsten@redhat.com> 1.11.1-1.2
 - fix release number
 
